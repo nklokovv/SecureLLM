@@ -1,0 +1,35 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  gateway:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongo:27017/securellm
+      REDIS_URL: redis://redis:6379
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      DEFAULT_RATE_LIMIT: 30
+      TOKEN_VAULT_TTL_SECONDS: 3600
+      SEED_CLIENT_KEY: ${SEED_CLIENT_KEY:-client-dev-key-change-me}
+      SEED_ADMIN_KEY: ${SEED_ADMIN_KEY:-admin-dev-key-change-me}
+    depends_on:
+      mongo:
+        condition: service_started
+      redis:
+        condition: service_started
+    command: sh -c "sleep 3 && node dist/scripts/seedApiKey.js && node dist/src/index.js"
+
+volumes:
+  mongo_data:

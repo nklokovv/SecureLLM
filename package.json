@@ -1,0 +1,40 @@
+{
+  "name": "securellm-gateway",
+  "version": "1.0.0",
+  "description": "Production-grade security layer for LLM-powered applications",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js",
+    "dev": "tsx watch --env-file=.env src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "seed": "tsx --env-file=.env scripts/seedApiKey.ts",
+    "start:env": "node --env-file=.env dist/src/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ioredis": "^5.4.2",
+    "mongoose": "^8.9.5",
+    "openai": "^4.77.0",
+    "pino": "^9.6.0",
+    "pino-http": "^10.3.0",
+    "uuid": "^11.0.5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "@types/supertest": "^7.2.0",
+    "@types/uuid": "^10.0.0",
+    "supertest": "^7.2.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
