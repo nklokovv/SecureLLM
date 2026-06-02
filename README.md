@@ -102,7 +102,10 @@ Provider keys only via environment variables. Pino log redaction for sensitive h
 
 ## Tests
 
+Requires a one-time install on the host (Docker does not include devDependencies):
+
 ```bash
+npm install
 npm test          # full Vitest suite
 npm run typecheck # tsc --strict, no emit
 ```
